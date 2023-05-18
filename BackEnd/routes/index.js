@@ -35,4 +35,24 @@ router.get('/potato', async function(req, res, next) {
   res.render('index', { title: req.post });
 });
 
+router.get('/salchicha' , async function (req, res, next) {
+  console.log(req.post)
+  console.log("patata")
+  let patata = {
+    "holi": "quetal"
+  }
+
+  res.send(patata)
+})
+
+router.post('/salchicha' , async function (req, res, next) {
+  console.log(req.body)
+  console.log("patata")
+  let patata = {
+    "holi": "quetal"
+  }
+
+  res.send(patata)
+})
+
 module.exports = router;

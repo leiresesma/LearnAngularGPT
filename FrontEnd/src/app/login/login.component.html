@@ -1,0 +1,9 @@
+<h1>Login:</h1>
+<form style="text-align: center;">
+    <label>Email</label>
+    <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+    <br>
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+    <button type="submit" (click)="login()">Login</button>
+</form>

@@ -1,0 +1,10 @@
+<h1>Register:</h1>
+<form>
+    <label>Email</label>
+    <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
+    <label>Password</label>
+    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
+    <label>Repeat Password</label>
+    <input type="password"[(ngModel)]="rpassword" [ngModelOptions]="{standalone: true}" placeholder="Repeat Password">
+    <button type="submit" (click)="register()">Register</button>
+</form>
