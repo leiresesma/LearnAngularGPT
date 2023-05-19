@@ -1,0 +1,21 @@
+.example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+
+  .image{
+    display: flex;
+    width: 450px;
+    position:relative;
+  }
+
+  .container{
+    position:relative;
+    
+  }

@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { Router } from '@angular/router';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { Router } from '@angular/router';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]
