@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,19 +9,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = "";
-  password: string = "";
+  form: FormGroup;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private formBuilder : FormBuilder, private router: Router, private http: HttpClient) {}
+
+  ngOnInit() : void {
+    this.form = this.formBuilder.group({
+      "email" : '',
+      "password" : ''
+    })
+  };
 
   login() {
-    let bodyData = {
-      email : this.email,
-      password : this.password
-    };
-
-    this.http.post('http://localhost:3000/salchicha', bodyData).subscribe((res) => {
-      this.router.navigateByUrl('/home')
+    this.http.post('http://localhost:3000/login', this.form.getRawValue(), {
+      withCredentials: true
+    }).subscribe((res) => {
+      console.log(res)
+      this.router.navigate(['/home']);
     })
   }
 }

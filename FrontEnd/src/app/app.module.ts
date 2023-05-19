@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { Router } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
@@ -22,8 +22,8 @@ import { MatRadioModule } from '@angular/material/radio';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule,
-    MatRadioModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

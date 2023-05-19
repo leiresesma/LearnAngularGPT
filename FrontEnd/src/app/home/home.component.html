@@ -1,3 +1,16 @@
+<nav class="navbar bg-body-tertiary sticky-top bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/home">
+            <img src="/assets/img/svg/angular_chatgpt_logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            Learn Angular w\ChatGPT
+        </a>
+      <form class="d-flex" *ngIf="authenticated">
+        <button type="button" class="btn btn-outline-danger" (click)="logout()">Logout</button>
+      </form>
+    </div>
+</nav>
+
+<h1>{{welcome}}</h1>
 
 <div class="container my-5">
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">

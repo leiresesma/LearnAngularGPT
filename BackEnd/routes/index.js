@@ -1,20 +1,52 @@
 const { Configuration, OpenAIApi } = require("openai");
-var express = require('express');
-var router = express.Router();
-
-
+const express = require('express');
+const router = express.Router();
 const mongojs = require('mongojs')
-const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['questions'])
+const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['users'])
 const configuration = new Configuration({
     organization: "org-IsSnrNvIfWgqfr8SyOuh8y26",
     apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
+const jwt = require('jsonwebtoken')
 
 /* GET home page. */
-router.get('/potato', async function(req, res, next) {
+router.get('/', async function(req, res, next) {
+  try{
+    const cookie = req.cookies['jwt']
 
-  const completion = await openai.createChatCompletion({
+  const claims = jwt.verify(cookie, 'secret')
+
+  if(!claims) {
+    return res.status(401).send({
+      message: 'Unauthenticated'
+    })
+  }
+
+  const user = await db.users.findOne({"_id": mongojs.ObjectId(claims._id)}, (err, doc) => {
+    if (err) {
+      res.send({
+        message: 'Unauthenticated'
+      })
+    }
+    else {
+      console.log(claims._id)
+      console.log(doc)
+      res.send({
+        "message": "puesbien",
+        "user": doc
+      })
+    }
+  })
+  }
+  catch (error) {
+    return res.status(401).send({
+      message: 'Unauthenticated'
+    })
+  }
+  
+
+  /* const completion = await openai.createChatCompletion({
       model : "gpt-3.5-turbo",
       messages:[
           { 
@@ -32,27 +64,7 @@ router.get('/potato', async function(req, res, next) {
       "respuesta": respuesta
     }
   )
-  res.render('index', { title: req.post });
+  res.render('index', { title: req.post }); */
 });
-
-router.get('/salchicha' , async function (req, res, next) {
-  console.log(req.post)
-  console.log("patata")
-  let patata = {
-    "holi": "quetal"
-  }
-
-  res.send(patata)
-})
-
-router.post('/salchicha' , async function (req, res, next) {
-  console.log(req.body)
-  console.log("patata")
-  let patata = {
-    "holi": "quetal"
-  }
-
-  res.send(patata)
-})
 
 module.exports = router;
