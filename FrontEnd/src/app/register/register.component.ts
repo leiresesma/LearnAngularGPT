@@ -20,13 +20,15 @@ export class RegisterComponent {
   register () : void {
     let bodyData = {
       "email" : this.email,
+      "name" : "Michael",
+      "surname" : "Jackson",
       "password" : this.password,
       "rpassword" : this.rpassword
     }
 
-    this.http.post("http://localhost:3000/salchicha", bodyData).subscribe((res : any) => {
+    this.http.post("http://localhost:3000/login", bodyData).subscribe((res : any) => {
       console.log(res);
-      alert("Que furrula!")
+      alert(res)
     })
   }
 }
