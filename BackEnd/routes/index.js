@@ -2,16 +2,50 @@ const { Configuration, OpenAIApi } = require("openai");
 const express = require('express');
 const router = express.Router();
 const mongojs = require('mongojs')
-const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['questions'])
+const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['users'])
 const configuration = new Configuration({
     organization: "org-IsSnrNvIfWgqfr8SyOuh8y26",
     apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
+const jwt = require('jsonwebtoken')
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-  const completion = await openai.createChatCompletion({
+  try{
+    const cookie = req.cookies['jwt']
+
+  const claims = jwt.verify(cookie, 'secret')
+
+  if(!claims) {
+    return res.status(401).send({
+      message: 'Unauthenticatedy'
+    })
+  }
+
+  const user = await db.users.findOne({"_id": mongojs.ObjectId(claims._id)}, (err, doc) => {
+    if (err) {
+      res.send({
+        message: "Hello.",
+        "cookie": cookie,
+        "user": "Not working"
+      })
+    }
+    else {
+      console.log(claims._id)
+      console.log(doc)
+      res.send({"message": "puesbien"})
+    }
+  })
+  }
+  catch (error) {
+    return res.status(401).send({
+      message: 'Unauthenticated'
+    })
+  }
+  
+
+  /* const completion = await openai.createChatCompletion({
       model : "gpt-3.5-turbo",
       messages:[
           { 
@@ -29,7 +63,7 @@ router.get('/', async function(req, res, next) {
       "respuesta": respuesta
     }
   )
-  res.render('index', { title: req.post });
+  res.render('index', { title: req.post }); */
 });
 
 module.exports = router;

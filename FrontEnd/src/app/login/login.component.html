@@ -1,9 +1,32 @@
-<h1>Login:</h1>
-<form style="text-align: center;">
-    <label>Email</label>
-    <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-    <br>
-    <label>Password</label>
-    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
-    <button type="submit" (click)="login()">Login</button>
-</form>
+<div class="login">
+    <main class="form-signin w-100 m-auto">
+        <form>
+            <img class="mb-4" src="/assets/img/svg/angular_chatgpt_logo.svg" alt="" width="100rem">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+    
+            <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+            </div>
+    
+            <div class="checkbox mb-3">
+            <div class="alert alert-danger" role="alert">
+                *Incorrect password.
+            </div>
+            <label>
+                <a routerLink="">Recover Password</a>
+            </label>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <hr>
+            <div class="checkbox mb-3">
+                <p>or you can <a routerLink="/register">Register</a>.</p>
+            </div>
+            <p class="mt-5 mb-3 text-body-secondary">HADS 2023 - Leire Sesma & Eneko Pizarro</p>
+        </form>
+    </main>
+</div>

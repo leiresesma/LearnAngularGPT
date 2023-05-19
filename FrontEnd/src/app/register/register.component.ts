@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -7,28 +8,26 @@ import { Component } from '@angular/core';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  email : string = "";
-  password : string = "";
-  rpassword: string = "";
+  form: FormGroup;
 
-  constructor(private http: HttpClient) {}
+  constructor(private formBuilder : FormBuilder, private http: HttpClient) {}
 
   ngOnInit() : void {
-
-  }
+    this.form = this.formBuilder.group({
+      "email" : '',
+      "name" : '',
+      "surname" : '',
+      "password" : '',
+      "rpassword" : ''
+    })
+  };
 
   register () : void {
-    let bodyData = {
-      "email" : this.email,
-      "name" : "Michael",
-      "surname" : "Jackson",
-      "password" : this.password,
-      "rpassword" : this.rpassword
-    }
-
+    /*
     this.http.post("http://localhost:3000/login", bodyData).subscribe((res : any) => {
       console.log(res);
       alert(res)
-    })
+    })*/
+    console.log(this.form.getRawValue());
   }
 }

@@ -1,10 +1,48 @@
-<h1>Register:</h1>
-<form>
-    <label>Email</label>
-    <input type="email" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" placeholder="Email">
-    <label>Password</label>
-    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" placeholder="Password">
-    <label>Repeat Password</label>
-    <input type="password"[(ngModel)]="rpassword" [ngModelOptions]="{standalone: true}" placeholder="Repeat Password">
-    <button type="submit" (click)="register()">Register</button>
-</form>
+<div class="register">
+    <main class="form-signin w-100 m-auto">
+        <form [formGroup]="form" (submit)="register()">
+            <img class="mb-4" src="/assets/img/svg/angular_chatgpt_logo.svg" alt="" width="100rem">
+            <h1 class="h3 mb-3 fw-normal">Please register</h1>
+            <div class="form-floating">
+                <input type="email" class="form-control beginning" id="floatingInput" placeholder="name@example.com"
+                    formControlName="email">
+                <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control middle" id="floatingName" placeholder="Name"
+                   formControlName="name">
+                <label for="floatingName">Name</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control middle" id="surnameName" placeholder="Surname"
+                    formControlName="surname">
+                <label for="floatingSurname">Surname</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control middle" id="floatingPassword" placeholder="Password"
+                    formControlName="password">
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control end" id="floatingRPassword" placeholder="Repeat Password"
+                    formControlName="rpassword">
+                <label for="floatingRPassword">Repeat Password</label>
+            </div>
+    
+            <div class="checkbox mb-3">
+                <label style="margin-bottom: 20px; text-align: left;">
+                    <input type="checkbox" value="AcceptTermsAndConditions"> I accept the <a routerLink="/register">Terms and Conditions.</a>
+                </label>
+                <div class="alert alert-danger" role="alert">
+                    *Incorrect password.
+                </div>
+            </div>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+            <hr>
+            <div class="checkbox mb-3">
+                <p>or you can go to <a routerLink="/">Login</a>.</p>
+            </div>
+            <p class="mt-5 mb-3 text-body-secondary">HADS 2023 - Leire Sesma & Eneko Pizarro</p>
+        </form>
+    </main>
+</div>

@@ -22,7 +22,7 @@ router.post('/' , async function (req, res, next) {
         {
           "question" : "You'll learn Angular with this application?",
           "qType" : "Binary", 
-          "response" : "True"
+          "answer" : "True"
         }
       ]
     }
@@ -55,4 +55,4 @@ router.post('/' , async function (req, res, next) {
     })
   })
 
-  module.exports = router;
+module.exports = router;
