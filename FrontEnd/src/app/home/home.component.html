@@ -20,17 +20,17 @@
         <mat-radio-group
         aria-labelledby="example-radio-group-label"
         class="example-radio-group" [(ngModel)]="selectedAnswer">
-        <mat-radio-button 
-          class="example-radio-button" *ngFor="let answer of typeOfAnswer" [value]="answer">
-          {{answer}}
-         </mat-radio-button>
-      </mat-radio-group>
+          <mat-radio-button 
+            class="example-radio-button" *ngFor="let option of questionOptions" [value]="option">
+            {{option}}
+          </mat-radio-button>
+        </mat-radio-group>
       </p>
       <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
         <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" (click)="comprobar()" >Comprobar</button>
         
         <button type="submit" class="btn btn-outline-secondary btn-lg px-4" (click)="nextQuestion()">Next</button>
-        <div> {{this.response}}</div>
+        <div> {{this.result}}</div>
       </div>
     </div>
     <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">

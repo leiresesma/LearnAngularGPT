@@ -11,6 +11,12 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   welcome : string = "You are not logged in.";
   authenticated : boolean = false;
+  selectedAnswer : string= "";
+  questionOptions : string[];
+  question : string;
+  result : string;
+  questionIndex : number;
+  questionObject : any;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -34,10 +40,9 @@ export class HomeComponent {
         Emitters.authEmitter.emit(false);
       }
     });
-  }
 
-  selectedAnswer: string= "";
-  typeOfAnswer: Array<String> = ['True', 'False'];
+    this.loadQuestions();
+  }
 
    user= {
       "email" : "leire@gmail.com",
@@ -69,44 +74,64 @@ export class HomeComponent {
         {
           "question" : "Where is my dog?",
           "qType" : "MultipleChoice", 
-          "answer" : "c",
+          "answer" : "My kitchen",
           "options": 
             {
               "a": "My room",
               "b": "My garden",
               "c" : "My kitchen",
               "d" : "I don' have a dog"
-            }
-            
-          
+            }          
         },
-
+        {
+          "question" : "Cual es el tipo correcto de dato para la siguiente declaración de variable?",
+          "qType" : "DropDown",
+          "answer" : "string[]",
+          "dropDown" : "questionOptions : <?> = ['a', 'b', 'c'];",
+          "options" :
+            {
+              "a" : "string",
+              "b" : "HashMap<character>",
+              "c" : "string[]",
+              "d" : "character[]"
+            }
+        }
       ]
     }
 
-//generar numero random
-  randomIndex = [0,1,2,3];
-  random = Math.floor(Math.random() * this.randomIndex.length);
-  points : number = 0;
-  typeQuestion : string = this.user.questions[this.random].qType  
-  question: string = this.user.questions[this.random].question;
+  
+  
+  
+  loadQuestions() : void {
+    //Select random question:
+    let numQuestions : number = this.user.questions.length;
+    console.log(numQuestions)
 
-  answer: string = this.user.questions[this.random].answer;
-  response: string = "";
-  comprobar () : void{
-    if(this.selectedAnswer==this.answer){
-      this.response= "Correct!"
-      this.points= this.points +1;
-      //localStorage.setItem("points", this.points)
-      console.log(this.points)
+    this.questionIndex = Math.floor(Math.random() * numQuestions);
+    this.questionObject = this.user.questions[this.questionIndex];
+    this.question = this.user.questions[this.questionIndex].question;
+
+    switch (this.questionObject.qType) {
+      case "Binary":
+        this.questionOptions = ['True', 'False'];
+        break;
+      case "MultipleChoice":
+        let options = this.questionObject.options;
+        this.questionOptions = [options.a, options.b, options.c, options.d];
+        break;
+    }
+  }  
+  
+  comprobar () : void {
+    if(this.selectedAnswer == this.questionObject.answer){
+      this.result = "Correct!"
     }else{
-      this.response= "Incorrect :("
+      this.result = "Incorrect."
     }
   }
   
   nextQuestion () : void{
    location.reload();
-    
   }
 
   logout() : void {
