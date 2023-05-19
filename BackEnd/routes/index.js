@@ -1,8 +1,6 @@
 const { Configuration, OpenAIApi } = require("openai");
-var express = require('express');
-var router = express.Router();
-
-
+const express = require('express');
+const router = express.Router();
 const mongojs = require('mongojs')
 const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['questions'])
 const configuration = new Configuration({
@@ -12,8 +10,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 /* GET home page. */
-router.get('/potato', async function(req, res, next) {
-
+router.get('/', async function(req, res, next) {
   const completion = await openai.createChatCompletion({
       model : "gpt-3.5-turbo",
       messages:[
@@ -34,25 +31,5 @@ router.get('/potato', async function(req, res, next) {
   )
   res.render('index', { title: req.post });
 });
-
-router.get('/salchicha' , async function (req, res, next) {
-  console.log(req.post)
-  console.log("patata")
-  let patata = {
-    "holi": "quetal"
-  }
-
-  res.send(patata)
-})
-
-router.post('/salchicha' , async function (req, res, next) {
-  console.log(req.body)
-  console.log("patata")
-  let patata = {
-    "holi": "quetal"
-  }
-
-  res.send(patata)
-})
 
 module.exports = router;
