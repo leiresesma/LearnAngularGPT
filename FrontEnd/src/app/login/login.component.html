@@ -16,8 +16,8 @@
             </div>
     
             <div class="checkbox mb-3">
-            <div class="alert alert-danger" role="alert">
-                *Incorrect password.
+            <div class="alert alert-danger" role="alert" *ngIf="showError">
+                {{errorMsg}}
             </div>
             <label>
                 <a routerLink="">Recover Password</a>

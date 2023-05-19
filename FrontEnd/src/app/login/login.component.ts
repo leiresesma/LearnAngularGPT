@@ -10,22 +10,32 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class LoginComponent {
   form: FormGroup;
+  showError: boolean;
+  errorMsg: string;
 
-  constructor(private formBuilder : FormBuilder, private router: Router, private http: HttpClient) {}
+  constructor(private formBuilder : FormBuilder, private router: Router, private http: HttpClient) {
+    this.showError;
+    this.errorMsg = "";
+  }
 
   ngOnInit() : void {
     this.form = this.formBuilder.group({
       "email" : '',
       "password" : ''
-    })
-  };
+    });
+  }
 
   login() {
     this.http.post('http://localhost:3000/login', this.form.getRawValue(), {
       withCredentials: true
-    }).subscribe((res) => {
-      console.log(res)
-      this.router.navigate(['/home']);
-    })
+    }).subscribe((res : any) => {
+      if (res.hasOwnProperty("error")) {
+        this.showError = true;
+        this.errorMsg = res.error;
+      }
+      else {
+        this.router.navigate(['/home']);
+      }
+    });
   }
 }

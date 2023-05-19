@@ -15,7 +15,6 @@ export class HomeComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() : void {
-    //The emiter doesn't do nothing right now, but if needed you can copy it and call the logout event elsewhere.
     Emitters.authEmitter.subscribe(
       (auth : boolean) => {
         this.authenticated = auth;
@@ -36,6 +35,7 @@ export class HomeComponent {
       }
     });
   }
+
   selectedAnswer: string= "";
   typeOfAnswer: Array<String> = ['True', 'False'];
 
@@ -113,7 +113,7 @@ export class HomeComponent {
     this.http.get('http://localhost:3000/logout', {
       withCredentials: true
     }).subscribe((res) => {
-      this.authenticated = false;
+      Emitters.authEmitter.emit(false);
       console.log(res);
       this.router.navigate(['/']);
     })
