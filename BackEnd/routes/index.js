@@ -19,22 +19,23 @@ router.get('/', async function(req, res, next) {
 
   if(!claims) {
     return res.status(401).send({
-      message: 'Unauthenticatedy'
+      message: 'Unauthenticated'
     })
   }
 
   const user = await db.users.findOne({"_id": mongojs.ObjectId(claims._id)}, (err, doc) => {
     if (err) {
       res.send({
-        message: "Hello.",
-        "cookie": cookie,
-        "user": "Not working"
+        message: 'Unauthenticated'
       })
     }
     else {
       console.log(claims._id)
       console.log(doc)
-      res.send({"message": "puesbien"})
+      res.send({
+        "message": "puesbien",
+        "user": doc
+      })
     }
   })
   }

@@ -7,27 +7,8 @@ const bcrypt = require('bcryptjs')
 /* Register new user (/register) */
 router.post('/' , async function (req, res, next) {
     console.log(req.body)
-    
-    //Hash password:
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
-    let newUser = {
-      "email" : req.body.email,
-      "name" : req.body.name,
-      "surname" : req.body.surname,
-      "password" : hashedPassword,
-      "level" : 1,
-      "questions" : [
-        {
-          "question" : "You'll learn Angular with this application?",
-          "qType" : "Binary", 
-          "answer" : "True"
-        }
-      ]
-    }
-  
-    db.users.findOne({"email": req.body.email}, (err, doc) => {
+    db.users.findOne({"email": req.body.email}, async (err, doc) => {
       if (err) {
           res.send({
             "error": "*Username already exists."
@@ -40,16 +21,35 @@ router.post('/' , async function (req, res, next) {
             });
           }
           else{
-              db.users.insert(newUser,
-                  (err, result) => {
-                      if (err) {
-                          res.send(err);
-                      } else {
-                          res.send({
-                            "message": 'User successfully registered.'
-                          })
-                      }
-                  });
+            //Hash password:
+            const salt = await bcrypt.genSalt(10)
+            const hashedPassword = await bcrypt.hash(req.body.password, salt)
+
+            let newUser = {
+              "email" : req.body.email,
+              "name" : req.body.name,
+              "surname" : req.body.surname,
+              "password" : hashedPassword,
+              "level" : 1,
+              "questions" : [
+                {
+                  "question" : "You'll learn Angular with this application?",
+                  "qType" : "Binary", 
+                  "answer" : "True"
+                }
+              ]
+            }
+            db.users.insert(newUser,
+                (err, result) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.send({
+                          "message": 'User successfully registered.'
+                        })
+                    }
+                }
+            );
           }
       }
     })

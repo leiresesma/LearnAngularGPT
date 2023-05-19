@@ -1,15 +1,17 @@
 <div class="login">
     <main class="form-signin w-100 m-auto">
-        <form>
+        <form [formGroup]="form" (submit)="login()">
             <img class="mb-4" src="/assets/img/svg/angular_chatgpt_logo.svg" alt="" width="100rem">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
     
             <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+                formControlName="email">
             <label for="floatingInput">Email address</label>
             </div>
             <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                formControlName="password">
             <label for="floatingPassword">Password</label>
             </div>
     
