@@ -16,27 +16,24 @@ router.get('/', async function(req, res, next) {
   let user;
   try{
     const cookie = req.cookies['jwt']
+    const claims = jwt.verify(cookie, config.jwt.SECRET)
 
-  const claims = jwt.verify(cookie, config.jwt.SECRET)
-
-  if(!claims) {
-    return res.status(401).send({
-      message: 'Unauthenticated'
-    })
-  }
-
-  await db.users.findOne({"_id": mongojs.ObjectId(claims._id)}, (err, doc) => {
-    if (err) {
-      res.send({
+    if(!claims) {
+      return res.status(401).send({
         message: 'Unauthenticated'
       })
     }
-    else {
-      console.log(claims._id)
-      console.log(doc)
-      user=doc
-    }
-  })
+
+    await db.users.findOne({"_id": mongojs.ObjectId(claims._id)}, (err, doc) => {
+      if (err) {
+        res.send({
+          message: 'Unauthenticated'
+        })
+      }
+      else {
+        user = doc
+      }
+    })
   }
   catch (error) {
     return res.status(401).send({
@@ -75,8 +72,7 @@ router.get('/', async function(req, res, next) {
     }
   ] 
   let questionIndex = Math.floor(Math.random() * questionTypes.length);
-
-
+  
   const completion = await openai.createChatCompletion({
       model : "gpt-3.5-turbo",
       messages:[
@@ -86,6 +82,7 @@ router.get('/', async function(req, res, next) {
       ]
   })
   let response = completion.data.choices[0].message.content
+  
   let question;
   let answer;
   let options;
@@ -127,18 +124,17 @@ router.get('/', async function(req, res, next) {
       }
       break;
   }
-   
-  console.log(user)
-  db.books.update(
+
+  db.users.updateOne(
     
     { _id: mongojs.ObjectId(user._id)},
     {
-      $set: {
-       "options" : user.questions.push(newQuestion)
+      $push: {
+        "questions" : newQuestion
       }
     }
  )
-
+    
  res.send(newQuestion)
 });
 
