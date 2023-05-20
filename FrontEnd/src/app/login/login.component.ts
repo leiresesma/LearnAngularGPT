@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../domain/User';
+import config from '../../../../config.json';
+
 
 @Component({
   selector: 'app-login',
@@ -27,7 +29,7 @@ export class LoginComponent {
   }
 
   login() {
-    this.http.post('http://localhost:3000/login', this.form.getRawValue(), {
+    this.http.post(config['BACK_END-URL'] + '/login', this.form.getRawValue(), {
       withCredentials: true
     }).subscribe((res : any) => {
       if (res.hasOwnProperty("error")) {

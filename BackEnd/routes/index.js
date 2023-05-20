@@ -1,11 +1,12 @@
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express');
 const router = express.Router();
+const config = require('../../config.json')
 const mongojs = require('mongojs')
-const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['users'])
+const db = mongojs(config['MONGODB-URL'], ['questions', 'users'])
 const configuration = new Configuration({
-    organization: "org-IsSnrNvIfWgqfr8SyOuh8y26",
-    apiKey: "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",
+    organization: config.openai.organization,
+    apiKey: config.openai.apiKey,
 });
 const openai = new OpenAIApi(configuration);
 const jwt = require('jsonwebtoken')
@@ -15,7 +16,7 @@ router.get('/', async function(req, res, next) {
   try{
     const cookie = req.cookies['jwt']
 
-  const claims = jwt.verify(cookie, 'secret')
+  const claims = jwt.verify(cookie, config.jwt.SECRET)
 
   if(!claims) {
     return res.status(401).send({

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import config from '../../../../config.json';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,7 @@ export class RegisterComponent {
   };
 
   register () : void {
-    this.http.post("http://localhost:3000/register", this.form.getRawValue()).subscribe({
+    this.http.post(config['BACK_END-URL'] + "/register", this.form.getRawValue()).subscribe({
       next: (res : any) => {
         this.router.navigate(['/']);
       },

@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const config = require('../../config.json')
 const mongojs = require('mongojs')
-const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['questions'])
+const db = mongojs(config['MONGODB-URL'], ['questions', 'users'])
 const bcrypt = require('bcryptjs')
 const { check, validationResult } = require('express-validator');
 
@@ -38,7 +39,7 @@ router.post('/' , [
           }
           else{
             //Hash password:
-            const salt = await bcrypt.genSalt(10)
+            const salt = await bcrypt.genSalt(config.hashing.SALT)
             const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
             let newUser = {
