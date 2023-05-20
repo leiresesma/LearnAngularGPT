@@ -90,8 +90,7 @@ export class HomeComponent {
         },
         {
           "question" : "What lenguage uses Angular?",
-          "qType" : "Fill", 
-          "answer" : "Typescript"
+          "qType" : "Input", 
         },
       ]
     }
@@ -124,7 +123,7 @@ export class HomeComponent {
         this.dropDownMenuOptions = options;
         console.log("hola")
         break;*/
-      case "Fill":
+      case "Input":
         this.show = false;
         break;
     }
