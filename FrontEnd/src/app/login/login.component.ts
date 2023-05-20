@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { User } from '../domain/User';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,8 @@ export class LoginComponent {
   showError: boolean;
   errorMsg: string;
 
-  constructor(private formBuilder : FormBuilder, private router: Router, private http: HttpClient) {
-    this.showError;
+  constructor(private formBuilder : FormBuilder, private router: Router, private http: HttpClient, private user : User) {
+    this.showError = false;
     this.errorMsg = "";
   }
 
@@ -34,6 +35,7 @@ export class LoginComponent {
         this.errorMsg = res.error;
       }
       else {
+        this.user.isLogged = true;
         this.router.navigate(['/home']);
       }
     });

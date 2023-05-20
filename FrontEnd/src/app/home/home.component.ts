@@ -98,9 +98,6 @@ export class HomeComponent {
         }
       ]
     }
-
-  
-  
   
   loadQuestions() : void {
     //Select random question:

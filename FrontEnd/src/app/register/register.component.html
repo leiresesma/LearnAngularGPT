@@ -33,8 +33,8 @@
                 <label style="margin-bottom: 20px; text-align: left;">
                     <input type="checkbox" value="AcceptTermsAndConditions"> I accept the <a routerLink="/register">Terms and Conditions.</a>
                 </label>
-                <div class="alert alert-danger" role="alert">
-                    *Incorrect password.
+                <div class="alert alert-danger" role="alert" *ngIf="showError">
+                    {{errorMsg}}
                 </div>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
