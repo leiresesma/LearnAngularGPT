@@ -16,19 +16,25 @@
   <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
     <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
       <h1 class="question">{{question}}</h1>
-      <p>
-        <mat-radio-group
-        aria-labelledby="example-radio-group-label"
-        class="example-radio-group" [(ngModel)]="selectedAnswer">
-          <mat-radio-button 
-            class="example-radio-button" *ngFor="let option of questionOptions" [value]="option">
-            {{option}}
-          </mat-radio-button>
-        </mat-radio-group>
-      </p>
+      <div *ngIf="show; else notShow">
+        <p>
+          <mat-radio-group
+            aria-labelledby="example-radio-group-label"
+            class="example-radio-group" [(ngModel)]="selectedAnswer">
+              <mat-radio-button 
+                class="example-radio-button" *ngFor="let option of questionOptions" [value]="option">
+                {{option}}
+              </mat-radio-button>
+          </mat-radio-group>
+        </p>
+      </div>
+      <ng-template #notShow>
+        <div>
+          <input type="text" [(ngModel)]="selectedAnswer">
+      </div>
+      </ng-template>
       <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
         <button type="submit" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold" (click)="comprobar()" >Comprobar</button>
-        
         <button type="submit" class="btn btn-outline-secondary btn-lg px-4" (click)="nextQuestion()">Next</button>
         <div> {{this.result}}</div>
       </div>

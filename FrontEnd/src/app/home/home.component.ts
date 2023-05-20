@@ -17,6 +17,10 @@ export class HomeComponent {
   result : string;
   questionIndex : number;
   questionObject : any;
+  show: boolean;
+  dropdown: string;
+  dropDownMenuOptions: any;
+  
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -84,23 +88,12 @@ export class HomeComponent {
             }          
         },
         {
-          "question" : "Cual es el tipo correcto de dato para la siguiente declaración de variable?",
-          "qType" : "DropDown",
-          "answer" : "string[]",
-          "dropDown" : "questionOptions : <?> = ['a', 'b', 'c'];",
-          "options" :
-            {
-              "a" : "string",
-              "b" : "HashMap<character>",
-              "c" : "string[]",
-              "d" : "character[]"
-            }
-        }
+          "question" : "What lenguage uses Angular?",
+          "qType" : "Fill", 
+          "answer" : "Typescript"
+        },
       ]
     }
-
-  
-  
   
   loadQuestions() : void {
     //Select random question:
@@ -108,16 +101,30 @@ export class HomeComponent {
     console.log(numQuestions)
 
     this.questionIndex = Math.floor(Math.random() * numQuestions);
+    
     this.questionObject = this.user.questions[this.questionIndex];
     this.question = this.user.questions[this.questionIndex].question;
+    let options: any;
 
     switch (this.questionObject.qType) {
       case "Binary":
+        this.show = true;
         this.questionOptions = ['True', 'False'];
         break;
       case "MultipleChoice":
-        let options = this.questionObject.options;
+        this.show = true;
+        options = this.questionObject.options;
         this.questionOptions = [options.a, options.b, options.c, options.d];
+        break;
+      /*case "DropDown":
+        this.show = false;
+        this.dropdown = this.questionObject.dropDown;
+        options = this.questionObject.options;
+        this.dropDownMenuOptions = options;
+        console.log("hola")
+        break;*/
+      case "Fill":
+        this.show = false;
         break;
     }
   }  

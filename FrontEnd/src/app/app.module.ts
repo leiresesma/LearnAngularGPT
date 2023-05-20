@@ -10,6 +10,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { Router } from '@angular/router';
 import { MatRadioModule } from '@angular/material/radio';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { MatRadioModule } from '@angular/material/radio';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatRadioModule
+    MatRadioModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
