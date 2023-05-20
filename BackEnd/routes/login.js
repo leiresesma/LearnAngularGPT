@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const config = require('../../config.json')
 const mongojs = require('mongojs')
-const db = mongojs('mongodb://127.0.0.1:27017/hads23lab', ['questions', 'users'])
+const db = mongojs(config['MONGODB-URL'], ['questions', 'users'])
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -30,11 +31,11 @@ router.post('/' , async function (req, res, next) {
                 //Save token:
                 const token = jwt.sign({
                     _id : doc._id
-                }, "secret")
+                }, config.jwt.SECRET)
 
                 res.cookie('jwt', token, {
                     httpOnly: true,
-                    maxAge: 24 * 60 * 60 * 1000 //1 day (ms)
+                    maxAge: config.jwt.MAX_AGE //(ms)
                 })
 
                 res.send({

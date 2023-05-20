@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Emitters } from '../emitters/emitters';
 import { Router } from '@angular/router';
+import config from '../../../../config.json';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ export class HomeComponent {
       }
     );
 
-    this.http.get("http://localhost:3000/", {
+    this.http.get(config['BACK_END-URL'], {
       withCredentials: true
     }).subscribe({
       next: (res : any) => {
@@ -142,7 +143,7 @@ export class HomeComponent {
   }
 
   logout() : void {
-    this.http.get('http://localhost:3000/logout', {
+    this.http.get(config['BACK_END-URL'] + '/logout', {
       withCredentials: true
     }).subscribe((res) => {
       Emitters.authEmitter.emit(false);
