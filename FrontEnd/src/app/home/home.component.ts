@@ -16,21 +16,15 @@ export class HomeComponent {
   questionOptions : any[];
   question : string;
   result : string;
-  questionIndex : number;
-  questionObject : any;
   show: boolean;
   dropdown: string;
   dropDownMenuOptions: any;
   pachuli : string = "null";
-  pachulo = [{
-    "text": "maria",
-    "value": "pedro"
-  },
-{
-    "text": "mercxhe",
-    "value": "loli"
-  }];  
   preguntas :any;
+  questionObject : any;
+  options : any;
+  resultType : string;
+  message : boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -48,9 +42,8 @@ export class HomeComponent {
         console.log(res);
         this.welcome = 'Hello, ' + res.name + " " + res.surname + ".";
         this.preguntas= res.questions
-        this.loadQuestions();
+        this.generateQuestion();
         Emitters.authEmitter.emit(true);
-        
       },
       error: (e) => {
         console.error(e);
@@ -58,88 +51,60 @@ export class HomeComponent {
       }
     });
     
-  }
-
+  } 
   
-
-   user= {
-      "email" : "leire@gmail.com",
-      "name" : "req.body.name",
-      "surname" : "req.body.surname",
-      "password" : "hashedPassword",
-      "level" : 1,
-      "questions" : [
-        {
-          "question" : "You'll learn Angular with this application?",
-          "qType" : "Binary", 
-          "answer" : "True"
-        },
-        {
-          "question" : "Is working?",
-          "qType" : "Binary", 
-          "answer" : "False"
-        },
-        {
-          "question" : "My name is Leire?",
-          "qType" : "Binary", 
-          "answer" : "True"
-        },
-        {
-          "question" : "Is this funny?",
-          "qType" : "Binary", 
-          "answer" : "False"
-        },
-        {
-          "question" : "Where is my dog?",
-          "qType" : "MultipleChoice", 
-          "answer" : "My kitchen",
-          "options": 
-            {
-              "a": "My room",
-              "b": "My garden",
-              "c" : "My kitchen",
-              "d" : "I don' have a dog"
-            }          
-        },
-        {
-          "question" : "What lenguage uses Angular?",
-          "qType" : "Input", 
-        },
-      ]
-    }
-  
-  loadQuestions() : void {
+  next() : void {
     //Select random question:
     let numQuestions : number = this.preguntas.length;
+    this.message = false;
+    this.result = "";   
+    let questionIndex = Math.floor(Math.random() * numQuestions);
+    this.loadQuestions(questionIndex)
+  }
 
-    this.questionIndex = Math.floor(Math.random() * numQuestions);
-    
-    this.questionObject = this.preguntas[this.questionIndex];
-    this.question = this.preguntas[this.questionIndex].question;
-    let options: any;
+  reload() : void {
+    location.reload()
+  }
+
+  generateQuestion() : void {
+    this.loadQuestions(this.preguntas.length - 1)
+  }
+
+  loadQuestions(index : number) : void {
+    this.message = false;    
+    this.questionObject = this.preguntas[index];
+    this.question = this.preguntas[index].question;
 
     switch (this.questionObject.qType) {
       case "Binary":
         this.show = true;
-        this.questionOptions = ['True', 'False'];
+        this.questionOptions = [{
+          "text" : "True",
+          "value" : "True"
+        },
+      {
+        "text" : "False",
+        "value" : "False"
+      }];
         break;
       case "MultipleChoice":
         this.show = true;
-        options = this.questionObject.options;
-        this.questionOptions = [{
-          "text": options.a,
+        this.options = this.questionObject.options;
+        console.log(this.options)
+        this.questionOptions  = [{
+          "text": this.options.a,
           "value": "A"
         },
         {
-          "text": options.b,
+          "text": this.options.b,
           "value": "B"
         },
         {
-          "text": options.c,
+          "text": this.options.c,
           "value": "C"
         },
         {
-          "text": options.d,
+          "text": this.options.d,
           "value": "D"
         }
       ];
@@ -158,16 +123,15 @@ export class HomeComponent {
   }  
   
   test () : void {
-    console.log("this.selectedAnswe")
+    console.log(this.selectedAnswer + this.questionObject.answer)
+    this.message = true;
     if(this.selectedAnswer == this.questionObject.answer){
+      this.resultType = "alert-success"
       this.result = "Correct!"
     }else{
+      this.resultType = "alert-danger"
       this.result = "Incorrect."
     }
-  }
-  
-  nextQuestion () : void{
-   location.reload();
   }
 
   logout() : void {
