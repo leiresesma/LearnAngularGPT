@@ -30,8 +30,8 @@
                 aria-labelledby="example-radio-group-label"
                 class="example-radio-group" [(ngModel)]="selectedAnswer">
                   <mat-radio-button 
-                    class="example-radio-button" *ngFor="let option of questionOptions" [value]="option">
-                    {{option}}
+                    class="example-radio-button" *ngFor="let option of questionOptions" [value]="option.value">
+                    {{option.text}}
                   </mat-radio-button>
               </mat-radio-group>
           </div>
@@ -42,7 +42,7 @@
             </div>
           </ng-template>
           <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
-            <button type="submit" class="btn btn-success btn-lg px-4 me-md-2 fw-bold" (click)="comprobar()" >
+            <button class="btn btn-success btn-lg px-4 me-md-2 fw-bold" (click)="test()" >
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-lg" viewBox="0 1 16 16">
                 <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
               </svg>
@@ -58,7 +58,7 @@
             </button>
           </div>
           <div class="alert alert-danger" role="alert">
-            A simple danger alert—check it out!
+           {{result}}
           </div>
       </div>
       <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">

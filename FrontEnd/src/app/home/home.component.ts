@@ -13,7 +13,7 @@ export class HomeComponent {
   welcome : string = "You are not logged in.";
   authenticated : boolean = false;
   selectedAnswer : string= "";
-  questionOptions : string[];
+  questionOptions : any[];
   question : string;
   result : string;
   questionIndex : number;
@@ -48,6 +48,7 @@ export class HomeComponent {
         console.log(res);
         this.welcome = 'Hello, ' + res.name + " " + res.surname + ".";
         this.preguntas= res.questions
+        this.loadQuestions();
         Emitters.authEmitter.emit(true);
         
       },
@@ -57,8 +58,6 @@ export class HomeComponent {
       }
     });
     
-  
-    this.loadQuestions();
   }
 
   
@@ -127,7 +126,23 @@ export class HomeComponent {
       case "MultipleChoice":
         this.show = true;
         options = this.questionObject.options;
-        this.questionOptions = [options.a, options.b, options.c, options.d];
+        this.questionOptions = [{
+          "text": options.a,
+          "value": "A"
+        },
+        {
+          "text": options.b,
+          "value": "B"
+        },
+        {
+          "text": options.c,
+          "value": "C"
+        },
+        {
+          "text": options.d,
+          "value": "D"
+        }
+      ];
         break;
       /*case "DropDown":
         this.show = false;
@@ -142,7 +157,8 @@ export class HomeComponent {
     }
   }  
   
-  comprobar () : void {
+  test () : void {
+    console.log("this.selectedAnswe")
     if(this.selectedAnswer == this.questionObject.answer){
       this.result = "Correct!"
     }else{
