@@ -138,7 +138,8 @@ router.get('/', async function(req, res, next) {
  let welcome = {
   "name" : user.name,
   "surname" : user.surname,
-  "questions" : user.questions
+  "questions" : user.questions,
+  "newQuestion" : newQuestion
  }
  res.send(welcome)
 });
