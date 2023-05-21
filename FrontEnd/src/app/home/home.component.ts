@@ -21,7 +21,15 @@ export class HomeComponent {
   show: boolean;
   dropdown: string;
   dropDownMenuOptions: any;
-  
+  pachuli : string = "null";
+  pachulo = [{
+    "text": "maria",
+    "value": "pedro"
+  },
+{
+    "text": "mercxhe",
+    "value": "loli"
+  }];  
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -37,7 +45,7 @@ export class HomeComponent {
     }).subscribe({
       next: (res : any) => {
         console.log(res);
-        this.welcome = 'Hola, ' + res.name + " " + res.surname + ".";
+        this.welcome = 'Hello, ' + res.name + " " + res.surname + ".";
         Emitters.authEmitter.emit(true);
       },
       error: (e) => {
