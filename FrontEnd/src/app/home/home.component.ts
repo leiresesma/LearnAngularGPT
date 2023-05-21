@@ -37,7 +37,7 @@ export class HomeComponent {
     }).subscribe({
       next: (res : any) => {
         console.log(res);
-        this.welcome = 'Hola, ' + res.user.name + " " + res.user.surname + ".";
+        this.welcome = 'Hola, ' + res.name + " " + res.surname + ".";
         Emitters.authEmitter.emit(true);
       },
       error: (e) => {
@@ -98,7 +98,6 @@ export class HomeComponent {
   loadQuestions() : void {
     //Select random question:
     let numQuestions : number = this.user.questions.length;
-    console.log(numQuestions)
 
     this.questionIndex = Math.floor(Math.random() * numQuestions);
     

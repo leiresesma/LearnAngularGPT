@@ -134,8 +134,13 @@ router.get('/', async function(req, res, next) {
       }
     }
  )
-    
- res.send(newQuestion)
+  
+ let welcome = {
+  "name" : user.name,
+  "surname" : user.surname,
+  "questions" : user.questions
+ }
+ res.send(welcome)
 });
 
 module.exports = router;
