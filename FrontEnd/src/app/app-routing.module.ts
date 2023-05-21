@@ -8,8 +8,8 @@ import { homeFlagGuard } from './guards/check-login.guard';
 const routes: Routes = [
   {
     path: 'home',
-    component: HomeComponent,
-   // canActivate: [homeFlagGuard('checkFlag', '/')]
+    component: HomeComponent
+    //canActivate: [homeFlagGuard('checkFlag', '/')]
   },
   {
     path: '',
