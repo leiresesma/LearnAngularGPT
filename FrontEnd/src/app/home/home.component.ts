@@ -21,6 +21,7 @@ export class HomeComponent {
   show: boolean;
   dropdown: string;
   dropDownMenuOptions: any;
+  preguntas :any;
   
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -38,16 +39,21 @@ export class HomeComponent {
       next: (res : any) => {
         console.log(res);
         this.welcome = 'Hola, ' + res.name + " " + res.surname + ".";
+        this.preguntas= res.questions
         Emitters.authEmitter.emit(true);
+        
       },
       error: (e) => {
         console.error(e);
         Emitters.authEmitter.emit(false);
       }
     });
-
+    
+  
     this.loadQuestions();
   }
+
+  
 
    user= {
       "email" : "leire@gmail.com",
@@ -97,12 +103,12 @@ export class HomeComponent {
   
   loadQuestions() : void {
     //Select random question:
-    let numQuestions : number = this.user.questions.length;
+    let numQuestions : number = this.preguntas.length;
 
     this.questionIndex = Math.floor(Math.random() * numQuestions);
     
-    this.questionObject = this.user.questions[this.questionIndex];
-    this.question = this.user.questions[this.questionIndex].question;
+    this.questionObject = this.preguntas[this.questionIndex];
+    this.question = this.preguntas[this.questionIndex].question;
     let options: any;
 
     switch (this.questionObject.qType) {

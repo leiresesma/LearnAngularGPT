@@ -71,8 +71,8 @@ router.get('/', async function(req, res, next) {
         }
     }
   ] 
+
   let questionIndex = Math.floor(Math.random() * questionTypes.length);
-  
   const completion = await openai.createChatCompletion({
       model : "gpt-3.5-turbo",
       messages:[
