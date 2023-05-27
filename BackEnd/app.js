@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
+var responseRouter = require('./routes/response');
 
 var app = express();
 app.use(cors({
@@ -33,6 +34,7 @@ app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use('/response', responseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
