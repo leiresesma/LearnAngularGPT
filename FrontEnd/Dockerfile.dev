@@ -1,0 +1,14 @@
+FROM node:latest
+WORKDIR /
+
+COPY ./package.json ./FrontEnd
+
+COPY ../config.json ./
+
+RUN npm install
+
+COPY . ./FrontEnd
+
+WORKDIR /FrontEnd
+
+CMD ["npm", "run", "start"]
