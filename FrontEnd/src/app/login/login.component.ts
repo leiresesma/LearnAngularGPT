@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { User } from '../domain/User';
-import config from '../../../../config.json';
+import config from '../../../config.json';
 
 
 @Component({

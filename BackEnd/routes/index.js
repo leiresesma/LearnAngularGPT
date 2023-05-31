@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 const express = require('express');
 const router = express.Router();
-const config = require('../../config.json')
+const config = require('../config.json')
 const mongojs = require('mongojs')
 const db = mongojs(config['MONGODB-URL'], ['questions', 'users'])
 const configuration = new Configuration({

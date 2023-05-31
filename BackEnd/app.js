@@ -10,11 +10,14 @@ var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
+var responseRouter = require('./routes/response');
+
+const config = require('./config.json')
 
 var app = express();
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:3000', 'http://localhost:4200']
+  origin: [config['BACK_END-URL'], config['FRONT_END-URL']]
 }));
 
 // view engine setup
@@ -33,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/register', registerRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use('/response', responseRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mongo:
+      image: mongo
+      restart: always
+      container_name: hads23labdb
+      # environment:
+      #   MONGO_INITDB_ROOT_USERNAME: hads23lab@gmail.com
+      #   MONGO_INITDB_ROOT_PASSWORD: hads23lab
+      volumes:
+        - ./data:/data/db
+        - ./data/log:/var/log/mongodb
+      ports:
+        - "27017:27017"
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./BackEnd
+    volumes:
+      - /app/node_modules
+      - ./BackEnd:/app
+    restart: always
+    ports:
+      - "3000:3000"
+  frontend:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./FrontEnd
+    volumes:
+      - /app/node_modules
+      - ./FrontEnd:/app
+    restart: always
+    ports:
+      - "4200:4200"

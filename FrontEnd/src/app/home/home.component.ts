@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Emitters } from '../emitters/emitters';
 import { Router } from '@angular/router';
-import config from '../../../../config.json';
+import config from '../../../config.json';
 
 @Component({
   selector: 'app-home',
@@ -118,6 +118,7 @@ export class HomeComponent {
         break;*/
       case "Input":
         this.show = false;
+        console.log(this.selectedAnswer)
         break;
     }
   }  
@@ -125,13 +126,42 @@ export class HomeComponent {
   test () : void {
     console.log(this.selectedAnswer + this.questionObject.answer)
     this.message = true;
-    if(this.selectedAnswer == this.questionObject.answer){
+    if (this.show==true){
+        if(this.selectedAnswer == this.questionObject.answer){
       this.resultType = "alert-success"
       this.result = "Correct!"
-    }else{
+      }else{
       this.resultType = "alert-danger"
       this.result = "Incorrect."
+      }
+    }else{
+      let userAnswer={
+        "questionUserInput" : this.question,
+        "givenAnswer": this.selectedAnswer
+      }
+      console.log(userAnswer)
+      
+      this.http.post(config['BACK_END-URL'] + "/response", userAnswer,{
+        withCredentials: true
+      }).subscribe({
+        next: (res : any) => {
+          
+          console.log(res)
+          if(res.response=='True'){
+          this.resultType = "alert-success"
+          this.result = "Correct!"
+        }else{
+          this.resultType = "alert-danger"
+          this.result = res.explanation
+        }
+        },
+        error: (e) => {
+          alert(e.error.msg);
+        }
+      })
+
     }
+  
   }
 
   logout() : void {
